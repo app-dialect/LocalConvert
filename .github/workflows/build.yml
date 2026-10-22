@@ -1,0 +1,61 @@
+# Builds the Windows and macOS apps on every tag (v*) or on demand.
+# A tag push also publishes them as a GitHub release, with that version's CHANGELOG section as notes.
+name: build
+on:
+  workflow_dispatch:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest, macos-15-intel]   # macos-latest = Apple Silicon
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install -r requirements-dev.txt
+      - run: python -m pytest -q tests
+      - run: pyinstaller --noconfirm --clean LocalConvert.spec
+      - name: Zip (macOS)
+        if: runner.os == 'macOS'
+        run: cd dist && ditto -c -k --keepParent LocalConvert.app LocalConvert-macOS-$(uname -m).zip
+      - name: Zip (Windows)
+        if: runner.os == 'Windows'
+        run: Compress-Archive -Path dist/LocalConvert -DestinationPath dist/LocalConvert-Windows.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: LocalConvert-${{ matrix.os }}
+          path: dist/*.zip
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/download-artifact@v4
+        with:
+          path: out
+          merge-multiple: true
+      - name: Release notes from CHANGELOG.md
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          awk -v v="$version" '/^## \[/ { on = index($0, "[" v "]") > 0; next } on' CHANGELOG.md > notes.md
+          cat docs/release-footer.md >> notes.md
+      - name: Publish release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          prerelease=""
+          case "$GITHUB_REF_NAME" in *-*) prerelease="--prerelease" ;; esac
+          (cd out && shasum -a 256 *.zip > SHA256SUMS.txt)
+          gh release create "$GITHUB_REF_NAME" out/*.zip out/SHA256SUMS.txt $prerelease \
+            --title "LocalConvert ${GITHUB_REF_NAME#v}" --notes-file notes.md

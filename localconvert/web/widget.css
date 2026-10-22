@@ -1,0 +1,129 @@
+/* The click-wheel widget. Glass is simulated with layered gradients because a transparent
+   desktop window can't blur what is behind it. */
+:root {
+  --size: 300px;
+  --body-hi: rgba(255, 255, 255, .86);
+  --body-lo: rgba(222, 230, 240, .78);
+  --rim: rgba(255, 255, 255, .9);
+  --seg-line: rgba(30, 40, 60, .10);
+  --label: #2a3340;
+  --label-dim: rgba(42, 51, 64, .38);
+  --active-a: #14b8a6;
+  --active-b: #6366f1;
+  --hub-hi: rgba(255, 255, 255, .98);
+  --hub-lo: rgba(230, 236, 244, .95);
+  --hub-text: #18202b;
+  --hub-muted: #5b6676;
+  --shadow: 0 18px 40px rgba(20, 30, 50, .28), 0 4px 10px rgba(20, 30, 50, .18);
+  --danger: #dc2626;
+  --ok: #059669;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --body-hi: rgba(64, 72, 88, .86);
+    --body-lo: rgba(16, 19, 26, .84);
+    --rim: rgba(255, 255, 255, .22);
+    --seg-line: rgba(255, 255, 255, .08);
+    --label: #e6ebf2;
+    --label-dim: rgba(230, 235, 242, .32);
+    --active-a: #2dd4bf;
+    --active-b: #818cf8;
+    --hub-hi: rgba(78, 86, 102, .96);
+    --hub-lo: rgba(30, 34, 44, .96);
+    --hub-text: #f1f4f8;
+    --hub-muted: #a3adbb;
+    --shadow: 0 18px 40px rgba(0, 0, 0, .55), 0 4px 10px rgba(0, 0, 0, .4);
+    --danger: #f87171;
+    --ok: #34d399;
+    color-scheme: dark;
+  }
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html, body { margin: 0; height: 100%; }
+body {
+  background: transparent;
+  display: grid; place-items: center;
+  font: 13px/1.25 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-user-select: none; user-select: none;
+  overflow: hidden;
+}
+/* In a normal browser tab there is no desktop behind us, so give the page a backdrop. */
+body.in-browser { background: radial-gradient(circle at 30% 20%, #c7f0ea, transparent 50%), radial-gradient(circle at 80% 80%, #d9d6ff, transparent 50%), #eef1f6; }
+@media (prefers-color-scheme: dark) {
+  body.in-browser { background: radial-gradient(circle at 30% 20%, #0f3b37, transparent 50%), radial-gradient(circle at 80% 80%, #26244f, transparent 50%), #0c0e12; }
+}
+
+.device {
+  position: relative; width: var(--size); height: var(--size); border-radius: 50%;
+  box-shadow: var(--shadow); outline: none;
+  transition: transform .25s cubic-bezier(.2, .9, .3, 1.3);
+}
+body.in-browser .device { --size: min(300px, 92vw); }
+.device.dragging { transform: scale(1.03); }
+.device:focus-visible { box-shadow: var(--shadow), 0 0 0 3px var(--active-a); }
+
+/* The whole rim (outside the wheel) moves the window in the desktop app. */
+.grip { position: absolute; inset: 0; border-radius: 50%; cursor: grab; z-index: 0; }
+
+#wheel { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; overflow: visible; }
+.stop-body-hi { stop-color: var(--body-hi); }
+.stop-body-lo { stop-color: var(--body-lo); }
+.stop-active-a { stop-color: var(--active-a); }
+.stop-active-b { stop-color: var(--active-b); }
+.body { stroke: none; }
+.rim { fill: none; stroke: var(--rim); stroke-width: 1; }
+.track { fill: none; stroke: transparent; stroke-width: 4; }
+.progress { fill: none; stroke: url(#gProgress); stroke-width: 4; stroke-linecap: round; opacity: 0; transition: stroke-dashoffset .3s, opacity .3s; }
+.progress.on { opacity: 1; }
+.sheen { pointer-events: none; opacity: .5; }
+@media (prefers-color-scheme: dark) { .sheen { opacity: .14; } }
+
+.seg { pointer-events: all; cursor: pointer; }
+.seg path { fill: transparent; stroke: var(--seg-line); stroke-width: 1; transition: fill .12s; }
+.seg text { fill: var(--label); font-weight: 650; letter-spacing: .02em; text-anchor: middle; dominant-baseline: central; transition: fill .12s, font-size .12s; }
+.seg.dim text { fill: var(--label-dim); }
+.seg:hover path { fill: rgba(127, 140, 160, .10); }
+.seg.active path { fill: url(#gActive); stroke: transparent; filter: drop-shadow(0 0 6px rgba(45, 212, 191, .45)); }
+.seg.active text { fill: #fff; }
+.seg.idle-seg { cursor: default; }
+.seg.idle-seg:hover path { fill: transparent; }
+
+/* centre button */
+.hub {
+  position: absolute; left: 50%; top: 50%; width: 41%; height: 41%; transform: translate(-50%, -50%);
+  border-radius: 50%; z-index: 2; cursor: pointer; display: grid; place-items: center; text-align: center;
+  background: radial-gradient(circle at 35% 25%, var(--hub-hi), var(--hub-lo));
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, .7), inset 0 -2px 6px rgba(0, 0, 0, .10), 0 2px 8px rgba(0, 0, 0, .18);
+  color: var(--hub-text); transition: transform .12s, box-shadow .2s;
+  padding: 10px;
+}
+.hub:active, .hub.pressed { transform: translate(-50%, -50%) scale(.95); }
+.hub.target { box-shadow: inset 0 0 0 2px var(--active-a), 0 0 18px rgba(45, 212, 191, .5); }
+.hub-main { display: flex; flex-direction: column; align-items: center; gap: 2px; max-width: 100%; margin-top: -14px; }
+.hub-icon { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; color: var(--active-a); }
+.hub-title { font-weight: 750; font-size: 14px; max-width: 104px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hub-title.big { font-size: 22px; letter-spacing: .02em; }
+.hub-sub { font-size: 10.5px; color: var(--hub-muted); max-width: 104px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.hub-sub.wrap { white-space: normal; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; }
+.hub-badge { font: 800 10px/1 ui-monospace, Menlo, Consolas, monospace; text-transform: uppercase; color: #fff; padding: 4px 6px; border-radius: 5px; background: #64748b; }
+.hub.state-error .hub-icon { color: var(--danger); }
+.hub.state-done .hub-icon { color: var(--ok); }
+.hub.state-working .hub-icon { animation: spin .9s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.controls { position: absolute; left: 50%; top: calc(50% + 30px); transform: translateX(-50%); display: flex; gap: 4px; z-index: 3; }
+.controls button { width: 24px; height: 24px; border-radius: 50%; border: 0; padding: 0; display: grid; place-items: center; cursor: pointer;
+  background: transparent; color: var(--hub-muted); }
+.controls button:hover { background: rgba(127, 140, 160, .18); color: var(--hub-text); }
+.controls svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.controls.muted .wave { display: none; }
+.device:not(.show-controls) .controls { display: none; }
+
+.live { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .device, .hub, .seg path, .progress { transition: none; }
+}

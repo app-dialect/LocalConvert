@@ -1,0 +1,54 @@
+name: 🐞 Bug report
+description: A conversion failed or something isn't working the way it should.
+labels: ["bug", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time to report this! Clear steps help us fix it fast. **Please don't attach private files.** A small sample that shows the problem is perfect.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: What did you expect, and what happened instead? Include any error message.
+    validations:
+      required: true
+  - type: input
+    id: conversion
+    attributes:
+      label: Which conversion?
+      placeholder: e.g. HEIC → JPG, DOCX → PDF, MOV → MP3
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Drop a … file onto the click wheel
+        2. Release on …
+        3. See …
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: LocalConvert version
+      description: Run `python -m localconvert --version`, or see the release you downloaded.
+      placeholder: 0.1.0 beta
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: Operating system and computer
+      placeholder: macOS 15.6 on a MacBook Air M2 / Windows 11
+    validations:
+      required: true
+  - type: textarea
+    id: doctor
+    attributes:
+      label: Output of `python -m localconvert doctor` (if you run from source)
+      render: text
+  - type: textarea
+    id: extra
+    attributes:
+      label: Screenshots or screen recording
+      description: Drag files here. Please blur anything personal.

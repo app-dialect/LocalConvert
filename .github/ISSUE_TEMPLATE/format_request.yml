@@ -1,0 +1,36 @@
+name: 🧩 Format request
+description: Ask for a file type or conversion LocalConvert doesn't support yet.
+labels: ["format request", "enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: Every conversion has to run fully offline with permissively licensed libraries. If you know one that would work, say so below.
+  - type: input
+    id: from
+    attributes:
+      label: Convert from
+      placeholder: e.g. SVG, CR2 (Canon RAW), ODT
+    validations:
+      required: true
+  - type: input
+    id: to
+    attributes:
+      label: Convert to
+      placeholder: e.g. PNG, PDF
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: What do you use it for?
+  - type: textarea
+    id: library
+    attributes:
+      label: Library or tool that could do it (optional)
+      description: Name and licence, if you know one.
+  - type: checkboxes
+    id: help
+    attributes:
+      label: Want to build it?
+      options:
+        - label: I'd like to implement this myself (see CONTRIBUTING.md ▸ Add a format in 3 steps)

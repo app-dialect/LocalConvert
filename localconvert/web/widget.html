@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LocalConvert Wheel</title>
+  <link rel="stylesheet" href="/static/widget.css">
+  <link rel="icon" href="data:,">
+</head>
+<body>
+  <div class="device" id="device" tabindex="0" aria-label="LocalConvert wheel. Drop a file, then choose a format.">
+    <svg id="wheel" viewBox="-160 -160 320 320" aria-hidden="true">
+      <defs>
+        <radialGradient id="gBody" cx="35%" cy="25%" r="85%">
+          <stop offset="0" class="stop-body-hi"/>
+          <stop offset="1" class="stop-body-lo"/>
+        </radialGradient>
+        <linearGradient id="gActive" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" class="stop-active-a"/>
+          <stop offset="1" class="stop-active-b"/>
+        </linearGradient>
+        <linearGradient id="gProgress" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" class="stop-active-a"/>
+          <stop offset="1" class="stop-active-b"/>
+        </linearGradient>
+        <linearGradient id="gSheen" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#fff" stop-opacity=".55"/>
+          <stop offset=".45" stop-color="#fff" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <circle class="body" r="160" fill="url(#gBody)"/>
+      <circle class="rim" r="159.5"/>
+      <circle class="track" r="152"/>
+      <circle id="progress" class="progress" r="152" transform="rotate(-90)"/>
+      <g id="segments"></g>
+      <ellipse class="sheen" cx="0" cy="-92" rx="120" ry="58" fill="url(#gSheen)"/>
+    </svg>
+
+    <div class="hub" id="hub" role="button" tabindex="-1">
+      <div class="hub-main">
+        <span class="hub-badge" id="hubBadge" hidden></span>
+        <svg class="hub-icon" id="hubIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11"/><path d="M7.5 10.5L12 15l4.5-4.5"/><path d="M5 19h14"/></svg>
+        <div class="hub-title" id="hubTitle">Drop a file</div>
+        <div class="hub-sub" id="hubSub">onto a format</div>
+      </div>
+    </div>
+
+    <div class="controls" id="controls">
+      <button id="btnApp" type="button" title="Open the full app" aria-label="Open the full app">
+        <svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="14" rx="2"/><path d="M4 9h16"/></svg>
+      </button>
+      <button id="btnSound" type="button" title="Click sound" aria-label="Toggle click sound">
+        <svg viewBox="0 0 24 24"><path d="M5 10v4h3l4 3V7L8 10H5z"/><path class="wave" d="M15.5 9.5a3.5 3.5 0 0 1 0 5"/><path class="wave" d="M17.8 7.2a7 7 0 0 1 0 9.6"/></svg>
+      </button>
+      <button id="btnClose" type="button" title="Close the wheel" aria-label="Close the wheel">
+        <svg viewBox="0 0 24 24"><path d="M7 7l10 10M17 7L7 17"/></svg>
+      </button>
+    </div>
+
+    <div class="grip pywebview-drag-region" title="Drag to move"></div>
+  </div>
+  <div class="live" id="live" role="status" aria-live="polite"></div>
+  <script src="/static/common.js"></script>
+  <script src="/static/widget.js"></script>
+</body>
+</html>

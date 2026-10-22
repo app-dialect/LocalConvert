@@ -1,0 +1,14 @@
+# Core (all pure-Python or with prebuilt wheels for Windows and macOS)
+Flask>=3.0
+Pillow>=10.0
+pillow-heif>=0.16        # HEIC/HEIF (iPhone photos)
+pypdfium2>=4.25          # PDF rendering & text (Apache-2.0/BSD)
+pypdf>=4.0               # PDF merging, later: form filling & editing
+reportlab>=4.0           # PDF writing
+python-docx>=1.1
+python-pptx>=0.6.23
+openpyxl>=3.1
+xlrd>=2.0                # legacy .xls
+Markdown>=3.5
+PyYAML>=6.0
+imageio-ffmpeg>=0.5      # bundles a static FFmpeg binary for audio/video

@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LocalConvert</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="data:,">
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4h7l5 5v11a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><path d="M14 4v5h5"/><path d="M9.5 15.5l2 2 3.5-4"/></svg>
+      <span>LocalConvert</span>
+    </div>
+    <div class="privacy" title="All conversions run on this computer. Nothing is uploaded to the internet.">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+      <span>Offline &middot; your files never leave this computer</span>
+    </div>
+    <button id="openWheel" class="ghost small" type="button" title="Open the click-wheel widget">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3.2"/></svg>Wheel
+    </button>
+    <button id="quit" class="ghost small" type="button">Quit</button>
+  </header>
+
+  <main>
+    <section id="drop" class="drop" tabindex="0">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4"/><path d="M7 9l5-5 5 5"/><path d="M5 16v3a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3"/></svg>
+      <h1>Drop files here to convert</h1>
+      <p><button id="browse" class="primary" type="button">Choose files</button></p>
+      <p class="hint">Images &middot; PDF &middot; Word &middot; Excel &middot; PowerPoint &middot; text &middot; audio &middot; video &middot; archives &middot; data</p>
+      <input type="file" id="fileInput" multiple hidden>
+    </section>
+
+    <section id="queue" hidden>
+      <div class="queue-head">
+        <h2>Files <span id="count" class="muted"></span></h2>
+        <div class="bulk">
+          <label for="bulkTarget">Convert all to</label>
+          <select id="bulkTarget"></select>
+          <button id="addMore" class="ghost small" type="button">Add files</button>
+          <button id="clear" class="ghost small" type="button">Clear</button>
+        </div>
+      </div>
+      <ul id="fileList" class="files"></ul>
+      <div id="combinedResult"></div>
+
+      <details class="options" id="optionsPanel">
+        <summary>Options</summary>
+        <div class="opt-grid">
+          <label>Image quality <output id="qualityOut">90</output>
+            <input type="range" id="quality" min="10" max="100" step="1" value="90">
+            <small>JPG, WebP, AVIF and HEIC. Lower = smaller files.</small>
+          </label>
+          <label>Resolution for PDF &rarr; image
+            <select id="dpi"><option value="72">72 DPI (screen, small)</option><option value="150" selected>150 DPI (standard)</option><option value="300">300 DPI (print)</option></select>
+          </label>
+          <label>Page size for new PDFs
+            <select id="pageSize"><option value="A4">A4</option><option value="Letter">US Letter</option><option value="image">Same as the image</option></select>
+          </label>
+          <label class="check"><input type="checkbox" id="keepMeta"> Keep photo metadata
+            <small>Camera details, date and GPS location. Off by default for privacy.</small>
+          </label>
+        </div>
+      </details>
+
+      <div class="actions">
+        <div class="dest">
+          <span class="muted">Save to</span>
+          <code id="outDir" title=""></code>
+          <button id="changeDir" class="ghost small" type="button">Change&hellip;</button>
+          <button id="openDir" class="ghost small" type="button">Open folder</button>
+        </div>
+        <div class="go">
+          <label id="combineWrap" class="check inline" hidden><input type="checkbox" id="combine"> Combine into one PDF</label>
+          <button id="convert" class="primary" type="button">Convert</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div id="engines" class="engines"></div>
+  </footer>
+
+  <div id="dropOverlay" class="overlay" hidden><div>Drop to add files</div></div>
+  <div id="toast" class="toast" role="status" hidden></div>
+
+  <template id="rowTpl">
+    <li class="file">
+      <span class="badge"></span>
+      <div class="meta">
+        <div class="name"></div>
+        <div class="sub"></div>
+      </div>
+      <span class="arrow" aria-hidden="true">&rarr;</span>
+      <select class="target" aria-label="Convert to"></select>
+      <div class="status">
+        <div class="bar"><div class="fill"></div></div>
+        <span class="state"></span>
+      </div>
+      <div class="row-actions">
+        <button class="show ghost small" type="button" hidden>Show</button>
+        <a class="download ghost small btn" hidden>Download</a>
+      </div>
+      <button class="remove icon" type="button" aria-label="Remove">&times;</button>
+    </li>
+  </template>
+
+  <div class="backdrop" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span><span class="blob b4"></span></div>
+  <script src="/static/common.js"></script>
+  <script src="/static/app.js"></script>
+</body>
+</html>

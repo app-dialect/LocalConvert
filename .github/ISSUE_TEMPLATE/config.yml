@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 Questions & ideas
+    url: https://github.com/shreyansa98/LocalConvert/discussions
+    about: Ask questions, share tips, and chat with other LocalConvert users.
+  - name: 🔒 Report a security issue
+    url: https://github.com/shreyansa98/LocalConvert/security/advisories/new
+    about: Please report vulnerabilities privately.
