@@ -14,4 +14,4 @@ Unzip it and open **LocalConvert**.
 - **macOS:** the app isn't notarized yet, so the first time, right-click it and choose **Open** (or *System Settings ▸ Privacy & Security ▸ Open Anyway*).
 - **Windows:** if SmartScreen warns you, click **More info ▸ Run anyway**.
 
-`SHA256SUMS.txt` lists the checksum of every download. Found a bug? [Open an issue](https://github.com/shreyansa98/LocalConvert/issues/new/choose). Like it? A ⭐ helps other people find it.
+`SHA256SUMS.txt` lists the checksum of every download. Found a bug? [Open an issue](https://github.com/app-dialect/LocalConvert/issues/new/choose). Like it? A ⭐ helps other people find it.

@@ -6,17 +6,17 @@
 
 **Convert any file without uploading it. Free, open source, and fully offline, with a click wheel.**
 
-[![Download beta](https://img.shields.io/github/v/release/shreyansa98/LocalConvert?include_prereleases&label=download&color=14B8A6)](https://github.com/shreyansa98/LocalConvert/releases)
-[![Downloads](https://img.shields.io/github/downloads/shreyansa98/LocalConvert/total?color=34C759)](https://github.com/shreyansa98/LocalConvert/releases)
-[![Stars](https://img.shields.io/github/stars/shreyansa98/LocalConvert?style=flat&color=FFCC00)](https://github.com/shreyansa98/LocalConvert/stargazers)
-[![CI](https://github.com/shreyansa98/LocalConvert/actions/workflows/ci.yml/badge.svg)](https://github.com/shreyansa98/LocalConvert/actions/workflows/ci.yml)
+[![Download beta](https://img.shields.io/github/v/release/app-dialect/LocalConvert?include_prereleases&label=download&color=14B8A6)](https://github.com/app-dialect/LocalConvert/releases)
+[![Downloads](https://img.shields.io/github/downloads/app-dialect/LocalConvert/total?color=34C759)](https://github.com/app-dialect/LocalConvert/releases)
+[![Stars](https://img.shields.io/github/stars/app-dialect/LocalConvert?style=flat&color=FFCC00)](https://github.com/app-dialect/LocalConvert/stargazers)
+[![CI](https://github.com/app-dialect/LocalConvert/actions/workflows/ci.yml/badge.svg)](https://github.com/app-dialect/LocalConvert/actions/workflows/ci.yml)
 ![macOS](https://img.shields.io/badge/macOS-Apple%20Silicon%20%7C%20Intel-111?logo=apple)
 ![Windows](https://img.shields.io/badge/Windows-10%20%7C%2011-0078D4?logo=windows)
 ![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?logo=python&logoColor=white)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 ![Status: public beta](https://img.shields.io/badge/status-public%20beta-orange)
 
-[**⬇️ Download the beta**](https://github.com/shreyansa98/LocalConvert/releases) · [Formats](#-what-it-converts) · [Click wheel](#-the-click-wheel) · [Privacy](#-how-your-files-stay-private) · [Contribute](#-contributing)
+[**⬇️ Download the beta**](https://github.com/app-dialect/LocalConvert/releases) · [Formats](#-what-it-converts) · [Click wheel](#-the-click-wheel) · [Privacy](#-how-your-files-stay-private) · [Contribute](#-contributing)
 
 <br>
 
@@ -36,7 +36,7 @@ Online converters ask you to upload the file first. That's fine for a meme, and 
 It also has a **click wheel**: a small round widget, modelled on the iPod, that floats over your other windows. Drag a file onto it, slide onto the format you want, let go, and it's converted.
 
 > [!NOTE]
-> **LocalConvert is in public beta.** It already handles everyday conversions well, but expect rough edges. [Report anything odd](https://github.com/shreyansa98/LocalConvert/issues/new/choose), because every issue makes the next release better.
+> **LocalConvert is in public beta.** It already handles everyday conversions well, but expect rough edges. [Report anything odd](https://github.com/app-dialect/LocalConvert/issues/new/choose), because every issue makes the next release better.
 
 ## ✨ Why LocalConvert
 
@@ -120,7 +120,7 @@ Frosted-glass panels over a soft colour field that follows your system's light o
 
 ## ⬇️ Install
 
-**Download the app (no Python needed):** grab the zip for your computer from the [**latest release**](https://github.com/shreyansa98/LocalConvert/releases):
+**Download the app (no Python needed):** grab the zip for your computer from the [**latest release**](https://github.com/app-dialect/LocalConvert/releases):
 
 | Your computer | Download |
 |---|---|
@@ -225,7 +225,7 @@ The app bundles FFmpeg, so audio and video work without a separate install. A bu
 - [ ] Rich-text editing for DOCX/MD/TXT using the existing document model
 - [ ] Native macOS vibrancy behind the click wheel
 
-Have an idea? [Request a feature or format](https://github.com/shreyansa98/LocalConvert/issues/new/choose) or upvote one with a 👍.
+Have an idea? [Request a feature or format](https://github.com/app-dialect/LocalConvert/issues/new/choose) or upvote one with a 👍.
 
 ## 🤝 Contributing
 
@@ -241,7 +241,7 @@ Start with **[CONTRIBUTING.md](CONTRIBUTING.md)** (including *Add a format in 3 
 
 If LocalConvert saved you from uploading something private, **star the repo**. It's the best way to help others find it. Share it with a friend who still emails themselves files to convert them.
 
-[![Star History Chart](https://api.star-history.com/svg?repos=shreyansa98/LocalConvert&type=Date)](https://star-history.com/#shreyansa98/LocalConvert&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=app-dialect/LocalConvert&type=Date)](https://star-history.com/#app-dialect/LocalConvert&Date)
 
 ## 📄 License
 
